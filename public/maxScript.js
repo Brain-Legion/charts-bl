@@ -84,5 +84,5 @@ function openTab(e, tabId) {
   }
 
   document.getElementById(tabId).style.display = "block";
-  e.currentTarget.className += ' btn-left-menu-active';
+  e.currentTarget.className += 'btn-left-menu-active';
 }

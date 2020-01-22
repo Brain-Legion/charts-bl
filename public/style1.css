@@ -187,8 +187,8 @@ input.radio {
 	color: #fff!important;
 }
 .btn-left-menu {
-	background-color: #fff!important;
-	color: #3f51b5!important;
+	background-color: #fff;
+	color: #3f51b5;
 	transition: 0.15s;
 }
 

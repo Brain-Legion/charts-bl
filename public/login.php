@@ -10,7 +10,6 @@ require '../database/db_connect.php';
     else {
 
       if($mysqli->query("SELECT * FROM users WHERE login = '" .$_POST['login'] . "'") === TRUE) {
-        echo "Запрос пизда";
         echo 'Не работает';
       }
     }

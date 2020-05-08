@@ -2,18 +2,15 @@
 session_start();
 require '../database/db_connect.php';
 
-  if (isset($_POST['login']) && isset($_POST['password'])) {
-    if ($mysqli->query("SELECT * FROM users WHERE login = '" .$_POST['login'] . "'") === TRUE && $mysqli->query("SELECT * FROM users WHERE password = '" .$_POST['password'] . "'") === TRUE) {
+  if (isset($_POST['login-form'])) {
+     $res = $mysqli->query("SELECT * FROM users WHERE login = '" .$_POST['login'] . "' AND  password = '" .$_POST['password'] . "'");
+     $row =$res->fetch_assoc();
 
-      $_SESSION['login'] = $_POST['login'];
+     $_SESSION['id'] = $row['id'];
+     $_SESSION['login'] = $row['login'];
+     $_SESSION['type'] = $row['role'];
     }
-    else {
 
-      if($mysqli->query("SELECT * FROM users WHERE login = '" .$_POST['login'] . "'") === TRUE) {
-        echo 'Не работает';
-      }
-    }
-  }
 
 ?>
 

@@ -3,9 +3,9 @@ session_start();
 require '../database/db_connect.php';
 
   if (isset($_POST['login']) && isset($_POST['password'])) {
-    if ($mysqli->query("SELECT * FROM users WHERE login = '" .$_POST['login'] . "'") === TRUE) {
+    if ($mysqli->query("SELECT * FROM users WHERE login = '" .$_POST['login'] . "'") === TRUE && $mysqli->query("SELECT * FROM users WHERE password = '" .$_POST['password'] . "'") === TRUE) {
 
-      $_SESSION['login'] = 123;
+      $_SESSION['login'] = $_POST['login'];
     }
     else {
 

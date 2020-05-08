@@ -2,15 +2,33 @@
 session_start();
 require '../database/db_connect.php';
 
+
+// if($mysqli){
+//   echo "Соединение установлено.<br>";
+// }
+// else
+// {
+//   die('Ошибка подключения к серверу баз данных.');
+// }
+
+
   if (isset($_POST['login-form'])) {
-     $res = $mysqli->query("SELECT * FROM users WHERE login = '" .$_POST['login'] . "' AND  password = '" .$_POST['password'] . "'");
-     $row =$res->fetch_assoc();
+    $login =  mysqli_real_escape_string($mysqli, $_POST['username']);
+    $password =  mysqli_real_escape_string($mysqli, $_POST['password']);
 
-     $_SESSION['id'] = $row['id'];
-     $_SESSION['login'] = $row['login'];
-     $_SESSION['type'] = $row['role'];
+    if ($mysqli->query("SELECT * FROM `users` WHERE login = '$login' AND password = '$password'") == TRUE) {
+        $res = $mysqli->query("SELECT * FROM `users` WHERE login = '$login' AND password = '$password'");
+        $row = $res->fetch_assoc();
+
+        $_SESSION['id'] = $row['id'];
+        $_SESSION['login'] = $row['login'];
+        $_SESSION['role'] = $row['role'];
+
     }
-
+    else {
+      printf('Запрос не работает. ');
+    }
+}
 
 ?>
 
@@ -36,7 +54,7 @@ require '../database/db_connect.php';
       <form class="d-flex flex-column align-items-center justify-content-center w-50" method="POST" action="index.php">
         <div class="form-group w-50">
           <label for="group-login" class="col-form-label label-login-text">Логин</label>
-          <input class="form-control input-login" name="login" type="text" id="group-login" required>
+          <input class="form-control input-login" name="username" type="text" id="group-login" required>
         </div>
 
         <div class="form-group w-50">

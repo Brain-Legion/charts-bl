@@ -1,7 +1,7 @@
 <?php
 require_once '../database/db_connect.php';
 
-if (isset($_SESSION['login']))
+if (!isset($_SESSION['login']))
 {
 ?>
 

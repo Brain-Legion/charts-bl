@@ -1,8 +1,6 @@
 <?php
 require '../database/db_connect.php';
 
-
-
 if (isset($_SESSION['login']) && $_SESSION['role'] == 4)
 {
     ?>

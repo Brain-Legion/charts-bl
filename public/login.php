@@ -26,8 +26,17 @@ require '../database/db_connect.php';
         $_SESSION['last_name'] = $row['last_name'];
         $_SESSION['role'] = $row['role'];
 
-        header ('Location: index.php');  // перенаправление на нужную страницу
-        exit();    // прерываем работу скрипта, чтобы забыл о прошлом
+
+        if ($_SESSION['role'] == 4)
+        {
+          header ('Location: admin.php');  // перенаправление на нужную страницу
+          exit();    // прерываем работу скрипта, чтобы забыл о прошлом
+        }
+        else {
+          header ('Location: index.php');  // перенаправление на нужную страницу
+          exit();    // прерываем работу скрипта, чтобы забыл о прошлом
+        }
+
     }
     else {
       printf('Запрос не работает. ');

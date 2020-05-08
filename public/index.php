@@ -26,8 +26,7 @@ if (isset($_SESSION['login']))
 </head>
 
 <body>
-<!-- Проверка ролей |  Ученик      -->
-<?php if ($_SESSION['role'] == 1) { ?>
+
 
   <div class="container-fluid">
     <header>
@@ -58,7 +57,8 @@ if (isset($_SESSION['login']))
       </nav>
     </header>
 
-
+    <!-- Проверка ролей |  Ученик      -->
+    <?php if ($_SESSION['role'] == 1) { ?>
 
     <section class="profile-info events-info">
       <div class="line d-flex flex-column">
@@ -74,22 +74,8 @@ if (isset($_SESSION['login']))
                   <div class="mb-4 mt-2 text-center" id="profile-bigwheel">
                     <div style="width: 100%; height: 100%; position: relative;"></div>
                   </div>
-
-                  <!-- Об анализе колеса компетентности -->
-                  <!-- <div class="profile-info">
-                                <p class="text-center mb-2">
-                                    <a href="" class="btn btn-outline-secondary">Об анализе колеса компетентности</a>
-                                </p>
-                            </div> -->
                 </div>
                 <div class="col-md-3">
-                  <!-- <div class="text-right">
-                                <button class="btn btn-primary btn-info bm-2 hide-empty d-none">Скрыть пустые сектора</button>
-                                <button class="btn btn-primary btn-info bm-2 view-empty">Показать все сектора</button>
-                            </div>
-                            <div class="text-right">
-                                <!-- <a href="#" class="btn btn-warning mb-3">Загрузить цифровой след</a> -->
-                  <!-- </div> -->
 
                   <div id="bigwheel-level" class="d-none mb-1">
                     <div class="card card-primary">
@@ -188,39 +174,17 @@ if (isset($_SESSION['login']))
     </section>
   </div>
   </div>
-  <!-- Проверка ролей |  Ученик      -->
+  <!-- Проверка ролей |  Преподаватель      -->
   <?php
       }
       elseif ($_SESSION['role'] == 2){
    ?>
-        <div class="container-fluid">
-          <header>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-              <a class="navbar-brand" href="#">Лабараториум</a>
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-
-              <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="index.php">Профиль</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="teacherevent.php">Мероприятия</a>
-                  </li>
-                </ul>
-                <span class="navbar-tex d-flex align-items-center justify-content-center">
-                  <h2 class="nav-name"><?php printf($_SESSION['last_name'] . " " . substr($_SESSION['first_name'], 0, 2) . "."); ?></h2>
-                  <!-- <button onclick="logout()" class="btn btn-light">Выйти</button> -->
-                  <form method="post" action="login.php">
-                    <input type="submit" class="btn btn-light" style="width: auto" name="logout" value="Выход">
-                  </form>
-                </span>
-              </div>
-            </nav>
-          </header>
+          <section class="profile-info events-info">
+            <div class="line d-flex flex-column">
+              <h1 class="text-left"><?php printf($_SESSION['first_name'] . " " . $_SESSION['last_name']); ?></h1>
+              <h2 class="text-left">Преподаватель</h2>
+            </div>
+          </section>
     <?php
       }
     ?>

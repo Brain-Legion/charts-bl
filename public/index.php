@@ -5,6 +5,7 @@ require '../database/db_connect.php';
 
 if (isset($_SESSION['login']))
 {
+
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +26,8 @@ if (isset($_SESSION['login']))
 </head>
 
 <body>
+<!-- Проверка ролей |  Ученик      -->
+<?php if ($_SESSION['role'] == 1) { ?>
 
   <div class="container-fluid">
     <header>
@@ -45,7 +48,7 @@ if (isset($_SESSION['login']))
             </li>
           </ul>
           <span class="navbar-tex d-flex align-items-center justify-content-center">
-            <h2 class="nav-name">Караваев А.</h2>
+            <h2 class="nav-name"><?php printf($_SESSION['last_name'] . " " . substr($_SESSION['first_name'], 0, 2) . "."); ?></h2>
             <!-- <button onclick="logout()" class="btn btn-light">Выйти</button> -->
             <form method="post" action="login.php">
               <input type="submit" class="btn btn-light" style="width: auto" name="logout" value="Выход">
@@ -59,7 +62,7 @@ if (isset($_SESSION['login']))
 
     <section class="profile-info events-info">
       <div class="line d-flex flex-column">
-        <h1 class="text-left">Караваев Арсений Александрович </h1>
+        <h1 class="text-left"><?php printf($_SESSION['first_name'] . " " . $_SESSION['last_name']); ?></h1>
         <h2 class="text-left">Ученик</h2>
       </div>
       <main>
@@ -185,7 +188,42 @@ if (isset($_SESSION['login']))
     </section>
   </div>
   </div>
+  <!-- Проверка ролей |  Ученик      -->
+  <?php
+      }
+      elseif ($_SESSION['role'] == 2){
+   ?>
+        <div class="container-fluid">
+          <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+              <a class="navbar-brand" href="#">Лабараториум</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
 
+              <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="index.php">Профиль</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="teacherevent.php">Мероприятия</a>
+                  </li>
+                </ul>
+                <span class="navbar-tex d-flex align-items-center justify-content-center">
+                  <h2 class="nav-name"><?php printf($_SESSION['last_name'] . " " . substr($_SESSION['first_name'], 0, 2) . "."); ?></h2>
+                  <!-- <button onclick="logout()" class="btn btn-light">Выйти</button> -->
+                  <form method="post" action="login.php">
+                    <input type="submit" class="btn btn-light" style="width: auto" name="logout" value="Выход">
+                  </form>
+                </span>
+              </div>
+            </nav>
+          </header>
+    <?php
+      }
+    ?>
   <!-- amcharts scripts -->
   <script src="https://www.amcharts.com/lib/4/core.js"></script>
   <script src="https://www.amcharts.com/lib/4/charts.js"></script>

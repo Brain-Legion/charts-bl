@@ -22,6 +22,8 @@ require '../database/db_connect.php';
 
         $_SESSION['id'] = $row['id'];
         $_SESSION['login'] = $row['login'];
+        $_SESSION['first_name'] = $row['first_name'];
+        $_SESSION['last_name'] = $row['last_name'];
         $_SESSION['role'] = $row['role'];
 
         header ('Location: index.php');  // перенаправление на нужную страницу

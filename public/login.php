@@ -1,19 +1,47 @@
 <?php
-session_start();
+
 require '../database/db_connect.php';
 
-  if (isset($_POST['login']) && isset($_POST['password'])) {
-    if ($mysqli->query("SELECT * FROM users WHERE login = '" .$_POST['login'] . "'") === TRUE && $mysqli->query("SELECT * FROM users WHERE password = '" .$_POST['password'] . "'") === TRUE) {
 
-      $_SESSION['login'] = $_POST['login'];
+// if($mysqli){
+//   echo "Соединение установлено.<br>";
+// }
+// else
+// {
+//   die('Ошибка подключения к серверу баз данных.');
+// }
+
+
+  if (isset($_POST['login-form'])) {
+    $login =  mysqli_real_escape_string($mysqli, $_POST['username']);
+    $password =  mysqli_real_escape_string($mysqli, $_POST['password']);
+
+    if ($mysqli->query("SELECT * FROM `users` WHERE login = '$login' AND password = '$password'") == TRUE) {
+        $res = $mysqli->query("SELECT * FROM `users` WHERE login = '$login' AND password = '$password'");
+        $row = $res->fetch_assoc();
+
+        $_SESSION['id'] = $row['id'];
+        $_SESSION['login'] = $row['login'];
+        $_SESSION['first_name'] = $row['first_name'];
+        $_SESSION['last_name'] = $row['last_name'];
+        $_SESSION['role'] = $row['role'];
+
+
+        if ($_SESSION['role'] == 4)
+        {
+          header ('Location: admin.php');  // перенаправление на нужную страницу
+          exit();    // прерываем работу скрипта, чтобы забыл о прошлом
+        }
+        else {
+          header ('Location: index.php');  // перенаправление на нужную страницу
+          exit();    // прерываем работу скрипта, чтобы забыл о прошлом
+        }
+
     }
     else {
-
-      if($mysqli->query("SELECT * FROM users WHERE login = '" .$_POST['login'] . "'") === TRUE) {
-        echo 'Не работает';
-      }
+      printf('Запрос не работает. ');
     }
-  }
+}
 
 ?>
 
@@ -36,10 +64,10 @@ require '../database/db_connect.php';
 
   <div class="container-fluid login-screen d-flex align-items-center justify-content-center">
     <section class="container d-flex flex-column justify-content-center align-items-center">
-      <form class="d-flex flex-column align-items-center justify-content-center w-50" method="POST" action="index.php">
+      <form class="d-flex flex-column align-items-center justify-content-center w-50" method="POST" >
         <div class="form-group w-50">
           <label for="group-login" class="col-form-label label-login-text">Логин</label>
-          <input class="form-control input-login" name="login" type="text" id="group-login" required>
+          <input class="form-control input-login" name="username" type="text" id="group-login" required>
         </div>
 
         <div class="form-group w-50">

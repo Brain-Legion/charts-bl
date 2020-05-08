@@ -1,3 +1,11 @@
+<?php
+require_once '../database/db_connect.php';
+
+if (isset($_SESSION['login']))
+{
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +23,7 @@
 </head>
 
 <body>
+
   <div class="container-fluid-events">
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -27,20 +36,23 @@
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="index.html">Профиль</a>
+              <a class="nav-link" href="index.php">Профиль</a>
             </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="teacherevent.html">Мероприятия</a>
+            <li class="nav-item">
+              <a class="nav-link" href="teacherevent.php">Мероприятия</a>
             </li>
           </ul>
           <span class="navbar-tex d-flex align-items-center justify-content-center">
-            <h2 class="nav-name">Караваев А.</h2>
-            <button onclick="logout()" class="btn btn-light">Выйти</button>
+            <h2 class="nav-name"><?php printf($_SESSION['last_name'] . " " . substr($_SESSION['first_name'], 0, 2) . "."); ?></h2>
+            <form method="post" action="login.php">
+              <input type="submit" class="btn btn-light" style="width: auto" name="logout" value="Выход">
+            </form>
           </span>
         </div>
       </nav>
     </header>
-
+    <!-- Проверка ролей |  Ученик      -->
+    <?php if ($_SESSION['role'] == 1) { ?>
     <section class="event-info d-flex flex-column">
 
       <div class="general-line d-flex w-100 align-items-center justify-content-between">
@@ -174,6 +186,45 @@
     </div>
   </div>
 
+  <!-- Проверка ролей |  Преподаватель      -->
+  <?php
+      }
+      elseif ($_SESSION['role'] == 2) {
+   ?>
+              <!-- Default form contact -->
+            <div class="container">
+
+              <form class="text-left p-5" action="">
+                <p class="h4 text-center mb-4">Добавить мероприятие</p>
+                 <!-- Название -->
+                 <input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="Название меропирятия">
+
+                 <!-- Дата проведения -->
+                 <label>Дата проведения</label>
+                 <input type="date" id="defaultContactFormName" class="form-control mb-4" placeholder="Название меропирятия">
+
+                 <!-- Subject -->
+                 <label>Subject</label>
+                 <select class="browser-default custom-select mb-4">
+                     <option value="" disabled>Choose option</option>
+                     <option value="1" selected>Feedback</option>
+                     <option value="2">Report a bug</option>
+                     <option value="3">Feature request</option>
+                     <option value="4">Feature request</option>
+                 </select>
+
+                 <!-- Message -->
+                 <div class="form-group">
+                     <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="4" placeholder="Описание меропирятия"></textarea>
+                 </div>
+                 <!-- Send button -->
+                 <button class="btn btn-success btn-block" type="submit">Отправить</button>
+              </form>
+            </div>
+   <?php
+     }
+   ?>
+
   <!-- our scripts -->
   <!-- bootstrap material JS -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -189,3 +240,11 @@
 </body>
 
 </html>
+<?php
+
+
+}
+else {
+  header('Location: http://charts-bl/login.php');
+}
+ ?>

@@ -1,8 +1,11 @@
 <?php
-require_once '../database/db_connect.php';
+require '../database/db_connect.php';
 
-if (!isset($_SESSION['login']))
+
+
+if (isset($_SESSION['login']))
 {
+
 ?>
 
 <!DOCTYPE html>
@@ -24,6 +27,7 @@ if (!isset($_SESSION['login']))
 
 <body>
 
+
   <div class="container-fluid">
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -36,25 +40,29 @@ if (!isset($_SESSION['login']))
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="index.html">Профиль</a>
+              <a class="nav-link" href="index.php">Профиль</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="teacherevent.html">Мероприятия</a>
+              <a class="nav-link" href="teacherevent.php">Мероприятия</a>
             </li>
           </ul>
           <span class="navbar-tex d-flex align-items-center justify-content-center">
-            <h2 class="nav-name">Караваев А.</h2>
-            <button onclick="logout()" class="btn btn-light">Выйти</button>
+            <h2 class="nav-name"><?php printf($_SESSION['last_name'] . " " . substr($_SESSION['first_name'], 0, 2) . "."); ?></h2>
+            <!-- <button onclick="logout()" class="btn btn-light">Выйти</button> -->
+            <form method="post" action="login.php">
+              <input type="submit" class="btn btn-light" style="width: auto" name="logout" value="Выход">
+            </form>
           </span>
         </div>
       </nav>
     </header>
 
-
+    <!-- Проверка ролей |  Ученик      -->
+    <?php if ($_SESSION['role'] == 1) { ?>
 
     <section class="profile-info events-info">
       <div class="line d-flex flex-column">
-        <h1 class="text-left">Караваев Арсений Александрович</h1>
+        <h1 class="text-left"><?php printf($_SESSION['first_name'] . " " . $_SESSION['last_name']); ?></h1>
         <h2 class="text-left">Ученик</h2>
       </div>
       <main>
@@ -66,22 +74,8 @@ if (!isset($_SESSION['login']))
                   <div class="mb-4 mt-2 text-center" id="profile-bigwheel">
                     <div style="width: 100%; height: 100%; position: relative;"></div>
                   </div>
-
-                  <!-- Об анализе колеса компетентности -->
-                  <!-- <div class="profile-info">
-                                <p class="text-center mb-2">
-                                    <a href="" class="btn btn-outline-secondary">Об анализе колеса компетентности</a>
-                                </p>
-                            </div> -->
                 </div>
                 <div class="col-md-3">
-                  <!-- <div class="text-right">
-                                <button class="btn btn-primary btn-info bm-2 hide-empty d-none">Скрыть пустые сектора</button>
-                                <button class="btn btn-primary btn-info bm-2 view-empty">Показать все сектора</button>
-                            </div>
-                            <div class="text-right">
-                                <!-- <a href="#" class="btn btn-warning mb-3">Загрузить цифровой след</a> -->
-                  <!-- </div> -->
 
                   <div id="bigwheel-level" class="d-none mb-1">
                     <div class="card card-primary">
@@ -180,7 +174,20 @@ if (!isset($_SESSION['login']))
     </section>
   </div>
   </div>
-
+  <!-- Проверка ролей |  Преподаватель      -->
+  <?php
+      }
+      elseif ($_SESSION['role'] == 2){
+   ?>
+          <section class="profile-info events-info">
+            <div class="line d-flex flex-column">
+              <h1 class="text-left"><?php printf($_SESSION['first_name'] . " " . $_SESSION['last_name']); ?></h1>
+              <h2 class="text-left">Преподаватель</h2>
+            </div>
+          </section>
+    <?php
+      }
+    ?>
   <!-- amcharts scripts -->
   <script src="https://www.amcharts.com/lib/4/core.js"></script>
   <script src="https://www.amcharts.com/lib/4/charts.js"></script>

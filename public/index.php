@@ -1,14 +1,10 @@
 <?php
-require_once '../database/db_connect.php';
-session_start();
+require '../database/db_connect.php';
+
 
 
 if (isset($_SESSION['login']))
 {
-  if (isset($_POST["logout"])) {
-      session_unset();
-      $_SESSION['login'] = null;
-  }
 ?>
 
 <!DOCTYPE html>
@@ -63,7 +59,7 @@ if (isset($_SESSION['login']))
 
     <section class="profile-info events-info">
       <div class="line d-flex flex-column">
-        <h1 class="text-left">Караваев Арсений Александрович <?php  printf("Сессия ->" . $_SESSION['login']); ?></h1>
+        <h1 class="text-left">Караваев Арсений Александрович </h1>
         <h2 class="text-left">Ученик</h2>
       </div>
       <main>

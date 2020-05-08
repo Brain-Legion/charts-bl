@@ -1,3 +1,12 @@
+<?php
+require_once '../database/db_connect.php';
+
+if (isset($_SESSION['login']))
+{
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,13 +38,15 @@
             <li class="nav-item">
               <a class="nav-link" href="index.php">Профиль</a>
             </li>
-            <form method="post" action="login.php">
-              <input type="submit" class="btn btn-light" style="width: auto" name="logout" value="Выход">
-            </form>
+            <li class="nav-item">
+              <a class="nav-link" href="teacherevent.php">Мероприятия</a>
+            </li>
           </ul>
           <span class="navbar-tex d-flex align-items-center justify-content-center">
             <h2 class="nav-name">Караваев А.</h2>
-            <button onclick="logout()" class="btn btn-light">Выйти</button>
+            <form method="post" action="login.php">
+              <input type="submit" class="btn btn-light" style="width: auto" name="logout" value="Выход">
+            </form>
           </span>
         </div>
       </nav>
@@ -189,3 +200,9 @@
 </body>
 
 </html>
+<?php
+}
+else {
+  header('Location: http://charts-bl/login.php');
+}
+ ?>

@@ -27,11 +27,11 @@
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="index.html">Профиль</a>
+              <a class="nav-link" href="index.php">Профиль</a>
             </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="teacherevent.html">Мероприятия</a>
-            </li>
+            <form method="post" action="login.php">
+              <input type="submit" class="btn btn-light" style="width: auto" name="logout" value="Выход">
+            </form>
           </ul>
           <span class="navbar-tex d-flex align-items-center justify-content-center">
             <h2 class="nav-name">Караваев А.</h2>

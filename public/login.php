@@ -24,6 +24,8 @@ require '../database/db_connect.php';
         $_SESSION['login'] = $row['login'];
         $_SESSION['role'] = $row['role'];
 
+        header ('Location: index.php');  // перенаправление на нужную страницу
+        exit();    // прерываем работу скрипта, чтобы забыл о прошлом
     }
     else {
       printf('Запрос не работает. ');
@@ -51,7 +53,7 @@ require '../database/db_connect.php';
 
   <div class="container-fluid login-screen d-flex align-items-center justify-content-center">
     <section class="container d-flex flex-column justify-content-center align-items-center">
-      <form class="d-flex flex-column align-items-center justify-content-center w-50" method="POST" action="index.php">
+      <form class="d-flex flex-column align-items-center justify-content-center w-50" method="POST" >
         <div class="form-group w-50">
           <label for="group-login" class="col-form-label label-login-text">Логин</label>
           <input class="form-control input-login" name="username" type="text" id="group-login" required>

@@ -1,8 +1,14 @@
 <?php
 require_once '../database/db_connect.php';
+session_start();
 
-if (!isset($_SESSION['login']))
+
+if (isset($_SESSION['login']))
 {
+  if (isset($_POST["logout"])) {
+      session_unset();
+      $_SESSION['login'] = null;
+  }
 ?>
 
 <!DOCTYPE html>
@@ -36,15 +42,18 @@ if (!isset($_SESSION['login']))
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="index.html">Профиль</a>
+              <a class="nav-link" href="index.php">Профиль</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="teacherevent.html">Мероприятия</a>
+              <a class="nav-link" href="teacherevent.php">Мероприятия</a>
             </li>
           </ul>
           <span class="navbar-tex d-flex align-items-center justify-content-center">
             <h2 class="nav-name">Караваев А.</h2>
-            <button onclick="logout()" class="btn btn-light">Выйти</button>
+            <!-- <button onclick="logout()" class="btn btn-light">Выйти</button> -->
+            <form method="post" action="login.php">
+              <input type="submit" class="btn btn-light" style="width: auto" name="logout" value="Выход">
+            </form>
           </span>
         </div>
       </nav>
@@ -54,7 +63,7 @@ if (!isset($_SESSION['login']))
 
     <section class="profile-info events-info">
       <div class="line d-flex flex-column">
-        <h1 class="text-left">Караваев Арсений Александрович</h1>
+        <h1 class="text-left">Караваев Арсений Александрович <?php  printf("Сессия ->" . $_SESSION['login']); ?></h1>
         <h2 class="text-left">Ученик</h2>
       </div>
       <main>

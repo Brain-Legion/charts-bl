@@ -23,6 +23,8 @@ const upload = async function (elem) {
     method: 'POST',
     body: formData
   }).then(response => response.json().then(data => {
+    
+    // перерисовка графика тут
     chart.data = data.categories
     chart.validateData()
     elem.value = null;
@@ -40,7 +42,7 @@ document.querySelectorAll('.btn__input').forEach(elem => {
 
 // logout button
 function logout() {
-  location.href = "/login";
+  location.href = "login.html";
 }
 
 
@@ -56,14 +58,10 @@ function studentLogin() {
   const name = document.getElementById('group-login').value
   const password = document.getElementById('group-password').value
   if(name !=='Arskaravaev'  && password !=='karavaev'){
-
-    alert('Wrong credentials!')
+    alert('Неверные данные входа')
   }else{
-    location.href = "http://localhost:8080";
+    location.href = "http://127.0.0.1:5500/public/index.html";
   }
-}
-function teacherLogin() {
-  location.href = "teacherprofile.html";
 }
 
 

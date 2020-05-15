@@ -3,8 +3,9 @@ require_once '../database/db_connect.php';
 
 if (isset($_SESSION['login']))
 {
-  //функция проверки дубликатов файлов на сервере по названию
-  function checkFileDublicates($fileDir, $file, $index=1) {
+
+   //функция проверки дубликатов файлов на сервере по названию
+   function checkFileDublicates($fileDir, $file, $index=1) {
     if ($index == 1) {
       $newNamefile = $file;
     } else {
@@ -40,6 +41,8 @@ if (isset($_SESSION['login']))
 
 <body>
 
+
+
   <div class="container-fluid-events">
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -66,13 +69,13 @@ if (isset($_SESSION['login']))
       </nav>
     </header>
 
-
     <?php if ($_SESSION['role'] == 1) { ?>
+
     <section class="event-info d-flex flex-column">
 
 
       <div class="line d-flex flex-column">
-        <a href="teacherevent.html" class="btn-link">К странице мероприятия</a>
+        <a href="teacherevent3.html" class="btn-link">К странице мероприятия</a>
         <h1>Цифровой след участников мероприятия</h1>
       </div>
 
@@ -84,16 +87,11 @@ if (isset($_SESSION['login']))
           <div class="general-description">
             <div class="event-description">
               <h2>Мероприятие</h2>
-              <p>Выполнение разворота в три приема / 19 ноября, 08:00-10:00</p>
+              <p>Разработка функции безопасности робота / 19 ноября, 12:00-14:00</p>
             </div>
             <div class="event-description">
               <h2>Деятельность</h2>
-              <p>Ученики собирают базовую модель. Проводят эксперименты с блоком независимого управления
-                моторами.
-                Обучающиеся должны создать в программном обеспечении EV3 программу разворота в три
-                приема, задав
-                разные значения мощности для каждого мотора, что заставит робота двигаться в нужном
-                направлении.</p>
+              <p> Ученики включают в состав программы звуковой блок таким образом, чтобы он инициировал предупреждающий сигнал, когда колесный робот оказывается на определенном расстоянии от препятствия.</p>
             </div>
           </div>
           <!-- Description -->
@@ -186,58 +184,57 @@ if (isset($_SESSION['login']))
 
                   <!-- tab links -->
                   <div class="left-menu d-flex flex-column">
-                    <button class="tab-link btn btn-left-menu"
+                    <button class="tab-link btn btn-left-menu btn-left-menu-active"
                       onclick="openTab(event, 'tab1')">Файлы</button>
-                   <!--  <button class="tab-link btn btn-left-menu" onclick="openTab(event, 'tab2')">Ссылки</button>
+                 <!--    <button class="tab-link btn btn-left-menu" onclick="openTab(event, 'tab2')">Ссылки</button>
                     <button class="tab-link btn btn-left-menu" onclick="openTab(event, 'tab3')">Конспект</button> -->
                   </div>
 
                   <!-- tab content -->
                   <div id="tab1" class="load-content-files tab-content">
-                    <form class="form-group pt-0 d-flex flex-column" enctype="multipart/form-data" action="loadprint.php" method="post">
+                  <form class="form-group pt-0 d-flex flex-column" enctype="multipart/form-data" action="loadprint3.php" method="post">
                       <label for="form-file" class="col-form-label">Загрузите файлы по
                         мероприятию</label>
                       <input class="file" type="file" id="form-file" name="form-file[]" multiple required>
                       <textarea class="form-control" placeholder="Описание файлов" name="file-info"></textarea>
                       <button class="btn btn-primary mt-3" type="submit">Готово</button>
                       <button class="btn btn-danger mt-3">Отменить</button>
-                   
-
-                  <?php
+                      
+                      <?php
                   
-                    if ($_FILES['form-file']['size']) {
-                      $uploaddir='../uploadStudFiles/';
-                      if (!file_exists($uploaddir)) { //создать папку, если ее нет
-                          mkdir($uploaddir, 0700);
-                      }
-                      // вопрос: надо ли создавать папку с именем пользователя (или ФИО) , который в текущей сессии кидает файлы?
+                  if ($_FILES['form-file']['size']) {
+                    $uploaddir='../uploadStudFiles/';
+                    if (!file_exists($uploaddir)) { //создать папку, если ее нет
+                        mkdir($uploaddir, 0700);
+                    }
+                    // вопрос: надо ли создавать папку с именем пользователя (или ФИО) , который в текущей сессии кидает файлы?
 
-                      $info = htmlspecialchars($_POST['file-info']); //коммент к файлам
-                      $countFiles = count($_FILES['form-file']['name']); //сколько файлов загружено
-                     
-                      for ($i=0; $i<$countFiles;$i++) {
-                              $uploadfile = basename($_FILES['form-file']['name'][$i]);
-                              $uploadfile = $uploaddir.checkFileDublicates($uploaddir, $uploadfile); //переименовать файл если такой уже есть путем добавления индекса
-                              if (move_uploaded_file($_FILES['form-file']['tmp_name'][$i], $uploadfile)) {
-                                print_r('Файл корректен и был успешно загружен .<br>'); 
-                            } else {
-                              print_r('Проблема с загрузкой файла.<br>');
-                            }
-                            $userLogin = $_SESSION['login'];
-                            $result = $mysqli->query("SELECT id FROM users WHERE login='".$userLogin."'");
-                            $arr = $result->fetch_assoc(); 
-                            $id = $arr['id'];
-                            if($mysqli->query("INSERT INTO files (id, user_id, file_dir, info) VALUES (null,'".$id."','".$uploadfile."','".$info."')")) {
-                              print_r('Файл успешно отправлен <br>');
-                            } else {
-                              $err = $mysqli->error;
-                              print_r("Ошибка отправки: ".$err);
-                            }
-                        }
-
+                    $info = htmlspecialchars($_POST['file-info']); //коммент к файлам
+                    $countFiles = count($_FILES['form-file']['name']); //сколько файлов загружено
+                   
+                    for ($i=0; $i<$countFiles;$i++) {
+                            $uploadfile = basename($_FILES['form-file']['name'][$i]);
+                            $uploadfile = $uploaddir.checkFileDublicates($uploaddir, $uploadfile); //переименовать файл если такой уже есть путем добавления индекса
+                            if (move_uploaded_file($_FILES['form-file']['tmp_name'][$i], $uploadfile)) {
+                              print_r('Файл корректен и был успешно загружен .<br>'); 
+                          } else {
+                            print_r('Проблема с загрузкой файла.<br>');
+                          }
+                          $userLogin = $_SESSION['login'];
+                          $result = $mysqli->query("SELECT id FROM users WHERE login='".$userLogin."'");
+                          $arr = $result->fetch_assoc(); 
+                          $id = $arr['id'];
+                          if($mysqli->query("INSERT INTO files (id, user_id, file_dir, info) VALUES (null,'".$id."','".$uploadfile."','".$info."')")) {
+                            print_r('Файл успешно отправлен <br>');
+                          } else {
+                            $err = $mysqli->error;
+                            print_r("Ошибка отправки: ".$err);
+                          }
                       }
+
+                    }
                   ?>
-                   </form>
+                    </form>
                   </div>
 
 <!--                   <div id="tab2" class="load-content-files tab-content">
@@ -291,7 +288,6 @@ if (isset($_SESSION['login']))
 
 </body>
 </html>
-
 <?php
 }
 else {

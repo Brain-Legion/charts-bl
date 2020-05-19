@@ -226,6 +226,9 @@ if (isset($_SESSION['login']))
                           $id = $arr['id'];
                           if($mysqli->query("INSERT INTO files (id, user_id, file_dir, info) VALUES (null,'".$id."','".$uploadfile."','".$info."')")) {
                             print_r('Файл успешно отправлен <br>');
+                              $message = "<p>Сегодня 19 ноября на занятии по Разработка функции безопасности робот Ваш ребенок включил в состав программы звуковой блок таким образом, чтобы он инициировал предупреждающий сигнал, когда колесный робот оказывается на определенном расстоянии от препятствия.</p>";
+                              include "mail/mail.php";
+                              mailToParent($_SESSION['login'], $mysqli, $message);
                           } else {
                             $err = $mysqli->error;
                             print_r("Ошибка отправки: ".$err);

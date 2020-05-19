@@ -219,7 +219,10 @@ if (isset($_SESSION['login']))
                               $uploadfile = basename($_FILES['form-file']['name'][$i]);
                               $uploadfile = $uploaddir.checkFileDublicates($uploaddir, $uploadfile); //переименовать файл если такой уже есть путем добавления индекса
                               if (move_uploaded_file($_FILES['form-file']['tmp_name'][$i], $uploadfile)) {
-                                print_r('Файл корректен и был успешно загружен .<br>'); 
+                                print_r('Файл корректен и был успешно загружен .<br>');
+                                $message = "<p>Сегодня 19 ноября на занятии по Выполнение разворота в три приема Ваш ребенок собрал базовую модель. Ваш ребенок создал в программном обеспечении EV3 программу разворота в три приема, задав разные значения мощности для каждого мотора, что заставит робота двигаться в нужном направлении.</p>";
+                                include "mail/mail.php";
+                                mailToParent($_SESSION['login'], $mysqli, $message);
                             } else {
                               print_r('Проблема с загрузкой файла.<br>');
                             }
